@@ -9,6 +9,7 @@ then
     echo "ListExamples.java found"
 else
     echo "ListExamples.java not found"
+    cd ..
     rm -rf student-submission/
     exit 1
 fi
@@ -45,6 +46,7 @@ then
     cat compileError.txt
     rm ListExamples.java
     rm -rf student-submission/
+    rm *.txt
     exit 1
 fi
 
