@@ -1,41 +1,53 @@
 CPATH=".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar"
-rm ListExamples.java
-rm *.class
-rm -rf student-submission
-git clone $1 student-submission
+git clone $1 student-submission/
 echo 'Finished cloning'
 
-cd student-submission
+cd student-submission/
 
 if [[ -f ListExamples.java ]]
 then
     echo "ListExamples.java found"
 else
     echo "ListExamples.java not found"
+    rm -rf student-submission/
     exit 1
 fi
 
-FILTER=`grep -c -i "static List<String> filter(List<String> list, StringChecker sc)" ListExamples.java`
-MERGE=`grep -c -i "static List<String> merge(List<String> list1, List<String> list2)" ListExamples.java`
-if [[ $FILTER -ne 0 ]]
+FILTER=`grep -c "static List<String> filter(List<String> list, StringChecker sc)" ListExamples.java`
+MERGE=`grep -c "static List<String> merge(List<String> list1, List<String> list2)" ListExamples.java`
+if [[ $FILTER -eq 1 ]]
 then
-    echo "filter method found"
+    echo "Filter method found."
 else
-    echo "filter method not found"
+    rm ListExamples.java
+    rm -rf student-submission/
+    echo "Filter method not found."
     exit 1
 fi
 
-if [[ $MERGE -ne 0 ]]
+if [[ $MERGE -eq 1 ]]
 then
-    echo "merge method found"
+    echo "Merge method found."
 else
-    echo "merge method not found"
+    echo "Merge method not found."
+    rm ListExamples.java
+    rm -rf student-submission/
     exit 1
 fi
 
 cp ListExamples.java ..
 cd ..
-javac -cp $CPATH *.java
+javac -cp $CPATH *.java > compileError.txt 2>&1
+
+if [[ $? -ne 0 ]]
+then
+    echo "Compile Error"
+    cat compileError.txt
+    rm ListExamples.java
+    rm -rf student-submission/
+    exit 1
+fi
+
 java -cp $CPATH org.junit.runner.JUnitCore > errorFile.txt 2>&1
 if [[ $? -eq 0 ]]
 then
@@ -45,7 +57,16 @@ else
     cat errorFile.txt
 fi
 
-echo "Finished"
+SCORE=`grep -c "OK" errorFile.txt`
+if [[ $SCORE -eq 1 ]]
+then
+    echo "100.00/100.00- Well Done!"
+else
+    echo "Errors- Need to Fix"
+fi
 
-
+rm ListExamples.java
+rm *.class
+rm -rf student-submission/
+rm *.txt
 
