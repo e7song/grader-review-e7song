@@ -61,10 +61,11 @@ then
     exit 1
 fi
 
-java -cp $CPATH org.junit.runner.JUnitCore > errorFile.txt 2>&1
+java -cp $CPATH org.junit.runner.JUnitCore TestListExamples > errorFile.txt 2>&1
 if [[ $? -eq 0 ]]
 then
     echo "Implementation Passes"
+    cat errorFile.txt   
 else
     echo "Implementation Error"
     cat errorFile.txt
