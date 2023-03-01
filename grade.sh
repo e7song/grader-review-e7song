@@ -12,6 +12,8 @@ else
     echo "ListExamples.java not found"
     cd ..
     rm -rf student-submission/
+    javac Server.java
+    javac GradeServer.java
     exit 1
 fi
 
@@ -24,6 +26,8 @@ else
     rm ListExamples.java
     rm -rf student-submission/
     echo "Filter method not found."
+    javac Server.java
+    javac GradeServer.java
     exit 1
 fi
 
@@ -34,6 +38,8 @@ else
     echo "Merge method not found."
     rm ListExamples.java
     rm -rf student-submission/
+    javac Server.java
+    javac GradeServer.java
     exit 1
 fi
 
@@ -48,6 +54,8 @@ then
     rm ListExamples.java
     rm -rf student-submission/
     rm *.txt
+    javac Server.java
+    javac GradeServer.java
     exit 1
 fi
 
