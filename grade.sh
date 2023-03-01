@@ -26,6 +26,7 @@ else
     rm ListExamples.java
     rm -rf student-submission/
     echo "Filter method not found."
+    cd ..
     javac Server.java
     javac GradeServer.java
     exit 1
@@ -38,6 +39,7 @@ else
     echo "Merge method not found."
     rm ListExamples.java
     rm -rf student-submission/
+    cd ..
     javac Server.java
     javac GradeServer.java
     exit 1
